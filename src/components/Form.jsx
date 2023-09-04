@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Form = function ({ todosData }) {
   const [todos, setTodos] = useState([]);
@@ -12,19 +14,26 @@ const Form = function ({ todosData }) {
     text: "",
     isDone: false,
   };
+
   function handleChange(e) {
     e.preventDefault();
     setTodo({ ...todo, text: e.target.value });
   }
   function handleClick(e) {
     e.preventDefault();
+    if (todos.length === 12) {
+      toast.error("You can't add more than 12 notes!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
     setTodos([...todos, todo]);
     setTodo(initialState);
+    toast.success("Note added!");
     // console.log(todos);
   }
   useEffect(() => {
     todosData(todos);
-    console.log(todos);
   }, [todos]);
 
   return (
@@ -43,6 +52,7 @@ const Form = function ({ todosData }) {
         >
           Submit
         </button>
+        <ToastContainer />
       </div>
     </section>
   );

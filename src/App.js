@@ -7,7 +7,7 @@ function App() {
     setTodos(data);
   }
   return (
-    <div className="flex flex-col gap-10">
+    <div>
       <Form todosData={setDataFromChild} />
       <Todo data={todos} />
     </div>
